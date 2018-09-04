@@ -1,0 +1,36 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jee="http://www.springframework.org/schema/jee" xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="
+		http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.1.xsd
+		http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.1.xsd
+		http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.1.xsd
+		http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+       default-lazy-init="false">
+
+    <context:property-placeholder
+            ignore-resource-not-found="true" location="classpath:application.properties"/>
+
+
+    <!-- 配置自动扫描包路径，使用annotation 自动注册bean,并保证@Required,@Autowired的属性被注入 -->
+    <dubbo:annotation package="com.alibaba.web.controller" defaultregistry="web_registry"/>
+
+
+
+    <!-- 消费方应用名，用于计算依赖关系，不是匹配条件，不要与提供方一样 -->
+    <dubbo:application name="demo-consumer" owner="programmer" organization="dubbox"/>
+
+    <!--加上 protocol="zookeeper" 用来支持zookeeper集群-->
+    <dubbo:registry address="${dubbo.demo.zookeeper}" id="web_registry" protocol="zookeeper"/>
+    <!-- 定义dubbo协议（使用kryo序列化） -->
+    <dubbo:protocol name="dubbo" serialization="kryo"/>
+
+    <!-- 在wdhis-core-session的spring-login总已经包含 id="wdhis_core" address="${dubbo.mainzookeeper}"  -->
+    <!--<dubbo:registry id="wdhis_core" address="${dubbo.core.zookeeper}"/>-->
+    <!--加上 protocol="zookeeper" 用来支持zookeeper集群-->
+ <!--   <dubbo:registry id="wdhis_pay" address="${dubbo.pay.zookeeper}"  protocol="zookeeper"/>
+    <dubbo:registry id="wdhis_mmis" address="${dubbo.mmis.zookeeper}"  protocol="zookeeper"/>
+    <dubbo:registry id="wdhis_plugs" address="${dubbo.plugs.zookeeper}"  protocol="zookeeper"/>-->
+</beans>

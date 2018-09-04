@@ -1,0 +1,99 @@
+Common
+border-color
+ #9cc8f7
+border-radius
+ 0px
+font-size
+ 13px
+shadow-background-color
+ #fafafa
+mask-background-color
+ #eee
+toolbar-background-color
+ #f5f5f5
+toolbar-border-color
+ #dedede
+split-color
+ #fafafa
+split-proxy-color
+ #1a7bc9
+
+Header
+header-background-color
+ #daeef5
+header-text-color
+ #404040
+header-gradient-used
+ false
+header-gradient-from
+ none
+header-gradient-to
+ none
+
+Body
+body-background-color
+ #fafafa
+body-text-color
+ #404040
+
+Grid
+grid-header-background-color
+ #ebeced
+grid-header-gradient-from
+ #ffffff
+grid-header-gradient-to
+ #ffffff
+cell-border-color
+ #ccc
+alt-background-color
+ #f5f5f5
+ 
+State
+selected-background-color
+ #6caef5
+selected-text-color
+ #fff
+selected-border-color
+ #99cdff
+hover-background-color
+ #9cc8f7
+hover-text-color
+ #404040
+hover-border-color
+ #9cc8f7
+invalid-background-color
+ #fff3f3
+invalid-border-color
+ #ffa8a8
+invalid-text-color
+ #404040
+
+Menu
+menu-background-color
+ #fafafa
+menu-text-color
+ #404040
+menu-border-color
+ #c3d9e0
+
+Button
+button-background-color
+ #1a7bc9
+button-selected-color
+ #daeef5
+button-text-color
+ #404040
+button-border-color
+ #1a7bc9
+button-gradient-used
+ true
+button-gradient-from
+ #1a7bc9
+button-gradient-to
+ #1a7bc9
+button-radius
+ 0px
+button-split-color1
+#ddd
+button-split-color2
+ #fff

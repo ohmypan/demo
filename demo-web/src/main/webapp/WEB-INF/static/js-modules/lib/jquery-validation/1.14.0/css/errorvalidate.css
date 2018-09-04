@@ -1,0 +1,94 @@
+
+#username-error,#pwd-error {
+	position: absolute;
+    left: 20px;
+    top: 39px;
+    font-size: 14px;
+    color:#de971b;
+}
+
+label.formError {
+    color:#de971b;
+    font-size:12px;
+    margin-left: 26%;
+}
+
+.modal-body .form-group label.formError,
+#sysMenuModal label.formError,
+#branchForm label.formError {margin-left:33.33333333%;}
+
+input.formError,select.formError {
+	/* border-color: #d01111; */
+	background-color: #fff6f6;
+}
+
+.empForm .row .col-sm-6 label.formError,.empForm #empName-error {
+	padding-left: 0px;
+    position: absolute;
+    left: 4px;
+    top: 34px;
+    margin-left:26%;
+}
+
+#name-error {margin-left:41.66666667%;}
+
+#searchCodeForm label.formError,#searchNameForm label.formError,
+.addModal label.formError,#pubMenuSearchForm #menuTitle-error,
+#sequenceCode-error,#empName-error,#empCode-error,#txtempcode-error,
+.add-work form>.col-xs-5 label.formError,#power_name-error,
+#power_code-error,.location label.formError,.err-box #name-error,
+.err-box label.formError,#txtwardcode-error,#txtworkplacecode-error,
+.add-work #txtsystemcode-error,.add-work #txtmenucode-error,
+.add-work #txtwpmenucode-error,#txtactionright-error,#term-error,
+.add-work .empRoleErr #roleName-error,#termshort-error,#power_empName-error,
+#branchName-error,#wardName-error,#codeOrCharchn-error,#searchEmpName-error,
+.empErr #searchCodeForm #searchCode-error,.workErr #searchcode-error,
+#Charchn-error {
+	position:absolute;
+	margin-left:0;
+	left:58px;
+	top:30px;
+}
+
+#txtwardcode-error,#txtempcode-error {left:73px;}
+
+#txtworkplacecode-error {left:123px;}
+
+#txtdeptcode-error {left:15px;}
+
+.add-work #txtwpmenucode-error {left:139px;}
+
+#peopleSearchForm #empName-error,#empCode-error,
+#addListName-error,#termshort-error,#term-error,
+#inputCodeSearchForm #codeOrCharchn-error,
+#Charchn-error {left:45px;}
+
+.add-work form>.col-xs-5 label.formError,.add-work .wpMenuErr #roleName-error,
+#power_code-error,.location label.formError,.err-box #systemCode-error,#power_name-error,
+.err-box label.formError,.err-box #name-error,.err-box #searchNameForm label.formError,
+.err-box #searchCodeForm #searchCode-error,.add-work .menuErr #roleName-error,
+.subErr #systemName-error,.err-box #wardName-error,.nameErr #empName-error,
+.err-box #systemName-error,#searchCodeForm #searchCode-error,#power_empName-error,
+.wardErr #roleName-error,.add-work #peopleSearchForm #empName-error,.add-work #addListName-error,
+#searchEmpName-error,.add-work #validateAddRoleFrom #roleName-error {left:73px;}
+
+#branchName-error,#txtactionright-error,.add-work #txtmenucode-error,
+.add-work #txtwpmenucode-error {left:101px;}
+
+#codeOrCharchn-error,.add-work #txtworkplacecode-error {left:84px;}
+
+#searchWorkGroupForm label.formError,#menuTitle-error,
+#pubMenuSearchForm #menuTitle-error,#sequenceCode-error,
+.err-box #searchName-error {left:72px;}
+
+#systemName-error,#systemCode-error,#menuCode-error,.placeErr #workPlaceCode-error,
+#searchNameForm #searchName-error,.workErr #searchcode-error,
+.add-work #txtsystemcode-error {left:88px;}
+
+.addModal .modal-body .row>.col-xs-5>form,.add-work form>.col-xs-5 {position:relative;}
+
+.empErr #searchNameForm #searchName-error {left:30px;}
+
+.empForm .form-group {margin-bottom:18px;}
+
+.empForm .form-horizontal .form-group {position:relative;}

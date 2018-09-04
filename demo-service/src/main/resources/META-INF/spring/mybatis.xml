@@ -1,0 +1,148 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<beans xmlns="http://www.springframework.org/schema/beans"
+       xmlns:aop="http://www.springframework.org/schema/aop" xmlns:tx="http://www.springframework.org/schema/tx"
+       xmlns:xsi="http://www.w3.org/2001/XMLSchema-instance" xmlns:p="http://www.springframework.org/schema/p"
+       xmlns:context="http://www.springframework.org/schema/context"
+       xmlns:jdbc="http://www.springframework.org/schema/jdbc"
+       xmlns:jee="http://www.springframework.org/schema/jee"
+       xmlns:dubbo="http://code.alibabatech.com/schema/dubbo"
+       xsi:schemaLocation="http://www.springframework.org/schema/beans http://www.springframework.org/schema/beans/spring-beans-3.2.xsd
+           http://www.springframework.org/schema/aop http://www.springframework.org/schema/aop/spring-aop-3.2.xsd
+           http://www.springframework.org/schema/tx http://www.springframework.org/schema/tx/spring-tx-3.2.xsd
+           http://www.springframework.org/schema/jdbc http://www.springframework.org/schema/jdbc/spring-jdbc-3.2.xsd
+		    http://www.springframework.org/schema/jee http://www.springframework.org/schema/jee/spring-jee-3.2.xsd
+           http://www.springframework.org/schema/context http://www.springframework.org/schema/context/spring-context-3.2.xsd
+           http://code.alibabatech.com/schema/dubbo http://code.alibabatech.com/schema/dubbo/dubbo.xsd"
+       default-autowire="byName" default-lazy-init="false">
+
+    <context:property-placeholder
+            ignore-resource-not-found="true" location="classpath*:db.properties"/>
+
+    <!-- 数据源配置,使用应用服务器的数据库连接池 -->
+    <bean id="dataSource" class="com.alibaba.druid.pool.DruidDataSource">
+        <property name="driver" value="com.mysql.jdbc.Driver"/>
+        <property name="url" value="jdbc:mysql://localhost/dubbo_demo"/>
+        <property name="username" value="root"/>
+        <property name="password" value="123456"/>
+        <!--最大连接数-->
+        <property name="maxActive" value="60"></property>
+        <!--最小连接数-->
+        <property name="minIdle" value="10"></property>
+        <property name="testWhileIdle" value="true"></property>
+        <!-- 配置初始化大小、最小、最大 -->
+<!--        <property name="initialSize" value="1"/>
+        <property name="minIdle" value="1"/>
+        &lt;!&ndash;<property name="maxIdle" value="5" />&ndash;&gt;
+        <property name="maxActive" value="20"/>
+
+        <property name="defaultAutoCommit" value="false"/>
+
+        &lt;!&ndash; 配置获取连接等待超时的时间 &ndash;&gt;
+        <property name="maxWait" value="60000"/>
+        &lt;!&ndash; 配置间隔多久才进行一次检测，检测需要关闭的空闲连接，单位是毫秒 &ndash;&gt;
+        <property name="timeBetweenEvictionRunsMillis" value="60000"/>
+        &lt;!&ndash; 配置一个连接在池中最小生存的时间，单位是毫秒 &ndash;&gt;
+        <property name="minEvictableIdleTimeMillis" value="300000"/>
+
+        &lt;!&ndash; validationQuery：系统启动时通过该sql语句验证数据库是否可用,Oracle：'select 1 from dual'，mysql：'select 1 '&ndash;&gt;
+        <property name="validationQuery" value="select 1 from dual"/>
+        &lt;!&ndash;testWhileIdle:启用空闲连接检测，以便回收&ndash;&gt;
+        <property name="testWhileIdle" value="true"/>
+        &lt;!&ndash;testOnBorrow:从连接池获取连接时，是否检测连接可用性，开启性能会有些许影响&ndash;&gt;
+        <property name="testOnBorrow" value="false"/>
+        &lt;!&ndash;testOnReturn：释放连接到连接池时，是否检测连接可用性，开启性能会有些许影响&ndash;&gt;
+        <property name="testOnReturn" value="false"/>
+
+        &lt;!&ndash;如果用Oracle，则把poolPreparedStatements配置为true，mysql可以配置为false。分库分表较多的数据库，建议配置为false。&ndash;&gt;
+        <property name="poolPreparedStatements" value="true"/>
+        &lt;!&ndash;maxPoolPreparedStatementPerConnectionSize：最大缓存数，非oracle请设置为0&ndash;&gt;
+        <property name="maxPoolPreparedStatementPerConnectionSize" value="20"/>-->
+
+        <!-- 配置监控统计拦截的filters -->
+        <!--<property name="filters" value="" />-->
+    </bean>
+
+    <!-- MyBatis配置 -->
+    <bean id="sessionFactory" class="org.mybatis.spring.SqlSessionFactoryBean">
+        <property name="dataSource" ref="dataSource" />
+        <property name="configLocation" value="classpath:mybatis-config.xml" />
+        <property name="mapperLocations">
+            <list>
+                <value>classpath:com/alibaba/service/mapper/demo/demoMapper.xml</value>
+            </list>
+        </property>
+        <!-- 配置Mybatis的插件plugin -->
+        <property name="plugins">
+            <array>
+                <bean class="com.github.pagehelper.PageInterceptor">
+                    <!-- helperDialect：分页插件会自动检测当前的数据库链接，自动选择合适的分页方式。也可以指定 -->
+                    <!-- reasonable:默认false。为 true 时，pageNum<=0 时会查询第一页， pageNum>pages（超过总数时），会查询最后一页。 -->
+                    <property name="properties">
+                        <value>
+                            helperDialect=mysql
+                            reasonable=true
+                        </value>
+                    </property>
+                </bean>
+            </array>
+        </property>
+    </bean>
+
+    <tx:annotation-driven transaction-manager="transactionManager" />
+
+    <!-- druid -->
+    <bean id="stat-filter" class="com.alibaba.druid.filter.stat.StatFilter">
+        <property name="slowSqlMillis" value="3000" />
+        <property name="logSlowSql" value="true" />
+        <property name="mergeSql" value="true" />
+    </bean>
+    <bean id="wall-filter" class="com.alibaba.druid.wall.WallFilter">
+        <property name="dbType" value="mysql" />
+    </bean>
+
+    <!-- scan for mappers and let them be autowired -->
+    <bean class="org.mybatis.spring.mapper.MapperScannerConfigurer">
+        <property name="basePackage" value="com.alibaba.service.mapper" />
+        <property name="sqlSessionFactoryBeanName" value="sessionFactory"/>
+    </bean>
+    <!-- transaction support -->
+    <!-- PlatformTransactionMnager -->
+    <bean id="transactionManager"
+          class="org.springframework.jdbc.datasource.DataSourceTransactionManager">
+        <property name="dataSource" ref="dataSource"/>
+    </bean>
+
+    <!-- 使用annotation定义事务 -->
+    <tx:annotation-driven transaction-manager="transactionManager"
+                          proxy-target-class="true"/>
+
+
+    <aop:aspectj-autoproxy expose-proxy="true"/>
+
+  <!--  <dubbo:application name="alibaba-service" owner="programmer" organization="dubbox"/>-->
+
+    <!--registry:注册中心服务器地址，如果地址没有端口缺省为9090，同一集群内的多个地址用逗号分隔，如：ip:port,ip:port，不同集群的注册中心，请配置多个<dubbo:registry>标签-->
+    <!--registry的port：默认9090，当address没有带端口时使用此端口做为缺省值-->
+
+
+    <!--timeout优先顺序为：客户端方法级>客户端接口级>客户端全局>服务端方法级>服务端接口级>服务端全局，最大超不过dubbo:registry的timeout -->
+
+    <!-- 采用注释的方式配置bean -->
+<!--    <context:annotation-config/>
+    &lt;!&ndash; 配置要扫描的包 &ndash;&gt;
+    <context:component-scan base-package="com.alibaba.*.mapper"/>
+    &lt;!&ndash; dubbo协议的包 &ndash;&gt;
+    <dubbo:annotation package="com.alibaba.service.api"/>
+    &lt;!&ndash; 定义dubbo协议（使用kryo序列化）；port（默认20880，如果是-1，会自动分配一个没有被占用的端口） &ndash;&gt;
+    <dubbo:protocol name="dubbo" serialization="kryo" port="${dubbo.demo.protocol.port}"/>-->
+    <!-- <dubbo:protocol name="dubbo" serialization="kryo" optimizer="com.wdhis.core.SerializationOptimizerImpl" /> -->
+    <dubbo:application name="demo-provider" owner="programmer" organization="dubbox"/>
+    <dubbo:registry address="${dubbo.demo.zookeeper}" timeout="300000" protocol="zookeeper"/>
+
+    <!--retries="0"超时后不再重连-->
+    <dubbo:provider timeout="60000" retries="0"/>
+    <!--向 zookeeper 订阅 provider 的地址，由 zookeeper 定时推送-->
+    <dubbo:registry address="zookeeper://localhost:2181"/>
+    <!-- dubbo协议的包 -->
+    <dubbo:annotation package="com.alibaba.service.impl"/>
+</beans>

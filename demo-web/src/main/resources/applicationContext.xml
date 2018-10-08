@@ -27,10 +27,4 @@
     <!-- 定义dubbo协议（使用kryo序列化） -->
     <dubbo:protocol name="dubbo" serialization="kryo"/>
 
-    <!-- 在wdhis-core-session的spring-login总已经包含 id="wdhis_core" address="${dubbo.mainzookeeper}"  -->
-    <!--<dubbo:registry id="wdhis_core" address="${dubbo.core.zookeeper}"/>-->
-    <!--加上 protocol="zookeeper" 用来支持zookeeper集群-->
- <!--   <dubbo:registry id="wdhis_pay" address="${dubbo.pay.zookeeper}"  protocol="zookeeper"/>
-    <dubbo:registry id="wdhis_mmis" address="${dubbo.mmis.zookeeper}"  protocol="zookeeper"/>
-    <dubbo:registry id="wdhis_plugs" address="${dubbo.plugs.zookeeper}"  protocol="zookeeper"/>-->
 </beans>
